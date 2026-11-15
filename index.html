@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PDD BONUS - Earn With Referrals</title>
+<style>
+body{font-family:Arial;background:#0f172a;color:white;text-align:center;padding:20px}
+.box{background:#1e293b;padding:20px;border-radius:15px;max-width:450px;margin:auto}
+input{width:90%;padding:12px;margin:10px 0;border-radius:8px;border:none}
+button{background:#22c55e;color:white;padding:12px 20px;border:none;border-radius:8px;font-weight:bold;width:95%;cursor:pointer}
+.link-box{background:#0f172a;padding:12px;border-radius:8px;margin-top:15px;word-break:break-all}
+.small{color:#94a3b8;font-size:13px}
+h1{color:#22c55e}
+</style>
+</head>
+<body>
+<h1>PDD BONUS</h1>
+<p>Invite Friends. Earn Bonus.</p>
+
+<div class="box">
+<h2>Get Your Referral Link</h2>
+<input id="name" placeholder="Enter Your Name">
+<input id="phone" placeholder="Enter Your Phone e.g 072...">
+<button onclick="makeLink()">Get My Link</button>
+
+<div id="result" style="display:none">
+<p>Your Link:</p>
+<div class="link-box" id="myLink"></div>
+<p>Referrals: <b id="count">0</b> | Bonus: <b>Ksh <span id="bonus">0</span></b></p>
+<button onclick="shareWhatsApp()" style="background:#25D366">Share on WhatsApp</button>
+<p class="small">Kila mtu akijiunga na link yako, unapata Ksh 50 bonus.</p>
+</div>
+</div>
+
+<p class="small">PDD BONUS - Refer & Earn</p>
+
+<script>
+let myLinkText = "";
+function makeLink(){
+let name = document.getElementById('name').value;
+let phone = document.getElementById('phone').value;
+if(!name || !phone){ alert('Weka jina na namba kwanza'); return; }
+let code = name.replace(/\s/g,'').toLowerCase() + Math.floor(Math.random()*999);
+myLinkText = window.location.origin + "/?ref=" + code;
+document.getElementById('myLink').innerText = myLinkText;
+document.getElementById('result').style.display = 'block';
+localStorage.setItem('pdd_code', code);
+}
+function shareWhatsApp(){
+let msg = "Join PDD BONUS na upate bonus! Tumia link yangu: " + myLinkText;
+window.open("https://wa.me/?text=" + encodeURIComponent(msg));
+}
+// Check if someone came with ref
+const urlParams = new URLSearchParams(window.location.search);
+if(urlParams.get('ref')){
+document.querySelector('p').innerText = "Umealikwa na rafiki! Jiunge upate bonus ya kwanza.";
+}
+</script>
+</body>
+</html>
